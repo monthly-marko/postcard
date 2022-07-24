@@ -15,18 +15,12 @@ document.addEventListener('DOMContentLoaded', ev=>{
 
   if (location.hash){
     // get edition number from hash which will be used as part of the link
-    const editionNumber = location.hash.replace(/#/, '')
     
-    const picFront = `${EDITION_FRONT_PREFIX}-${editionNumber}`
-
-    // https://raw.githubusercontent.com/monthly-marko/postcard/master/ src/assets/ edition-01.jpeg
-    const srcUrl = `${GITHUB_ROOT}${FRONT_FOLDER_PREFIX}${picFront}.jpeg`
-    log('srcUrl', srcUrl)
-
+    const srcUrlFront = getImageURL('front')
     const imageEl = document.querySelector('main #front img')
-    imageEl.setAttribute('src', srcUrl)
+    imageEl.setAttribute('src', srcUrlFront)
 
-    const srcUrlBack = `${GITHUB_ROOT}${FRONT_FOLDER_PREFIX}${DEFAULT_BACK}`
+    const srcUrlBack = getImageURL()
     const imageElBack = document.querySelector('main #back img')
     imageElBack.setAttribute('src', srcUrlBack)
 
@@ -55,4 +49,19 @@ function handleFlip() {
 
   front.classList.toggle('flipped')
   back.classList.toggle('flipped')
+}
+
+function getImageURL(side = 'back'){
+    const FRONT_SIDE = 'front'
+    const isHostedLocally = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const editionNumber = location.hash.replace(/#/, '')
+
+    if (side === FRONT_SIDE){
+        // https://raw.githubusercontent.com/monthly-marko/postcard/master/ src/assets/ edition-01.jpeg
+        const fileName = `${EDITION_FRONT_PREFIX}-${editionNumber}`
+        const srcUrl = `${isHostedLocally ? '' : GITHUB_ROOT}${FRONT_FOLDER_PREFIX}${fileName}.jpeg`
+        return srcUrl
+    }
+
+    else return `${isHostedLocally ? '' : GITHUB_ROOT}${FRONT_FOLDER_PREFIX}${DEFAULT_BACK}`
 }
