@@ -1,0 +1,123 @@
+@font-face {
+  font-family: 'Lora';
+  src: url(assets/font/Lora-VariableFont_wght.ttf) format('truetype');
+}
+
+:root{
+  --flip-duration: 0.37s;
+  --card-perspective: 1500px;
+  --card-w-medium: 780px;
+  --card-border-radius: 0.1rem;
+}
+
+
+
+body{
+  margin: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  /* background: rgb(200, 241, 241); */
+  /* background: rgb(248, 192, 245); */
+  background-color: #79afe2;
+}
+
+.flex-center-center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#front img,
+#back img{
+  max-width: var(--card-w-medium);
+  height: auto;
+  box-shadow: 0 10px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius: var(--card-border-radius);
+}
+
+.card{
+  max-width: var(--card-w-medium);
+  height: auto;
+
+  position: relative;
+  perspective: var(--card-perspective);
+  /* keep or get rid of this ^ persp.? */
+}
+  
+.cardFront,
+.cardBack {
+  display: flex;
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: transform var(--flip-duration) ease;
+}
+.cardBack {
+  background-color: #ebf4ff;
+  transform: perspective(var(--card-perspective)) rotateX(-180deg);
+} 
+.cardBack.flipped {
+  transform: perspective(var(--card-perspective)) rotateX(0deg);
+}
+.cardFront {
+  transform: perspective(var(--card-perspective)) rotateX(0deg);
+}
+.cardFront.flipped {
+  transform: perspective(var(--card-perspective)) rotateX(180deg);
+}
+
+#back-text{
+  position: absolute;
+  top: 0;
+  border-radius: var(--card-border-radius);
+
+  padding: 3rem 2rem;
+  width: 340px
+}
+
+p{
+  font-family: 'Lora';
+  font-size: 1.1rem;
+  margin: 0;
+  text-indent: 1rem;
+}
+
+p a{
+  color: #18aa18;
+}
+
+
+#back-text p:nth-child(1){
+  width: 340px
+}
+
+#back-text p:nth-child(5){
+  text-indent: 0;
+
+  position: absolute;
+  right: -360px;
+  bottom: 201px;
+  width: 340px;
+}
+#back-text p:nth-child(6){
+  position: absolute;
+  right: -334px;
+  bottom: 145px;
+}
+
+
+#back-text p:first-child{
+  text-indent: 0;
+}
+
+#back-text p:last-child{
+  margin-block-start: 2rem;
+  text-indent: 0;
+}
+
+@media screen and (max-width: 800px) {
+  #front img,
+  #back img{
+    max-width: 100vw;
+  }
+}
