@@ -71,15 +71,15 @@ body{
   top: 0;
   border-radius: var(--card-border-radius);
 
-  padding: 3rem 2rem;
-  width: 340px
+  padding: 2.2rem 1.99rem;
+  width: 318px
 }
 
 p{
   font-family: 'Lora';
   font-size: 1.1rem;
   margin: 0;
-  text-indent: 1rem;
+  text-indent: 1.45rem;
 }
 
 p a{
@@ -88,21 +88,32 @@ p a{
 
 
 #back-text p:nth-child(1){
-  width: 340px
+  width: 335px
 }
 
-#back-text p:nth-child(5){
+#back-text p:nth-child(4){
   text-indent: 0;
 
   position: absolute;
-  right: -360px;
-  bottom: 201px;
   width: 340px;
+  right: -377px;
+  bottom: 170px;
 }
+#back-text p:nth-child(5){
+  position: absolute;
+  width: 330px;
+  right: -368px;
+  bottom: 102px;
+}
+
 #back-text p:nth-child(6){
   position: absolute;
-  right: -334px;
-  bottom: 145px;
+  right: -373.5px;
+  bottom: 52px;
+  width: 230px;
+  box-sizing: border-box;
+  padding: 0.22rem;
+  padding-bottom: 0.25rem;
 }
 
 
