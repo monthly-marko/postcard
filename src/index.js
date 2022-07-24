@@ -4,6 +4,7 @@ const {log} = console
 
 const EDITION_FRONT_PREFIX = 'edition',
   EDITION_PREFIX_BACK = 'b',
+  GITHUB_ROOT = 'https://raw.githubusercontent.com/monthly-marko/postcard/master/',
   FRONT_FOLDER_PREFIX = 'src/assets/',
   DEFAULT_BACK = 'postcard-back-default.jpeg',
   flip_duration = parseFloat(window.getComputedStyle(document.documentElement).getPropertyValue('--flip-duration')) * 1000;
@@ -17,12 +18,15 @@ document.addEventListener('DOMContentLoaded', ev=>{
     const editionNumber = location.hash.replace(/#/, '')
     
     const picFront = `${EDITION_FRONT_PREFIX}-${editionNumber}`
-    const srcUrl = `${FRONT_FOLDER_PREFIX}${picFront}.jpeg`
+
+    // https://raw.githubusercontent.com/monthly-marko/postcard/master/ src/assets/ edition-01.jpeg
+    const srcUrl = `${GITHUB_ROOT}${FRONT_FOLDER_PREFIX}${picFront}.jpeg`
+    log('srcUrl', srcUrl)
 
     const imageEl = document.querySelector('main #front img')
     imageEl.setAttribute('src', srcUrl)
 
-    const srcUrlBack = `${FRONT_FOLDER_PREFIX}${DEFAULT_BACK}`
+    const srcUrlBack = `${GITHUB_ROOT}${FRONT_FOLDER_PREFIX}${DEFAULT_BACK}`
     const imageElBack = document.querySelector('main #back img')
     imageElBack.setAttribute('src', srcUrlBack)
 
