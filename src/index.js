@@ -16,7 +16,6 @@ let flipTimer, isFlipInProgress = false;
 
 document.addEventListener('DOMContentLoaded', ev=>{
 
-  // not really used ATM
   if (isIosDevice()){
     document.body.classList.add(IOS_CLASSNAME)
   }

@@ -3,14 +3,17 @@
   src: url(assets/font/Lora-VariableFont_wght.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'Lora-italic';
+  src: url(assets/font/Lora-Italic-VariableFont_wght.ttf) format('truetype');
+}
+
 :root{
   --flip-duration: 0.37s;
   --card-perspective: 1500px;
   --card-w-medium: 780px;
   --card-border-radius: 0.1rem;
 }
-
-
 
 body{
   margin: 0;
@@ -19,6 +22,14 @@ body{
   /* background: rgb(200, 241, 241); */
   /* background: rgb(248, 192, 245); */
   background-color: #79afe2;
+
+  /* diff browsers have their own default stylesheet 
+  which sets the base text size => set it to same */
+  font-size: 16px;
+}
+
+i, em{
+  font-family: 'Lora-italic';
 }
 
 .flex-center-center{
@@ -71,8 +82,19 @@ body{
   top: 0;
   border-radius: var(--card-border-radius);
 
-  padding: 2.2rem 1.99rem;
-  width: 318px
+  box-sizing: border-box;
+  padding: 2.2rem 1.8rem;
+  width: 100%;
+  height: 100%;
+  
+  display: grid;
+  grid-column-gap: 2.7rem;
+  grid-row-gap: 1.6rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: 
+    "cell1 cell2"
+    "cell1 cell3"
 }
 
 p{
@@ -80,55 +102,97 @@ p{
   font-size: 1.1rem;
   margin: 0;
   text-indent: 1.45rem;
+  line-height: 1.48rem;
+
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  hyphens: auto;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
 }
 
 p a{
   color: #18aa18;
 }
 
-
-#back-text p:nth-child(1){
-  width: 335px
+.gridItem{
+  width: 100%
 }
-
-#back-text p:nth-child(4){
-  text-indent: 0;
-
-  position: absolute;
-  width: 340px;
-  right: -377px;
-  bottom: 170px;
+.gridItem1{
+  grid-area: cell1;
 }
-#back-text p:nth-child(5){
-  position: absolute;
-  width: 330px;
-  right: -368px;
-  bottom: 102px;
+.gridItem2{
+  grid-area: cell2;
 }
-
-#back-text p:nth-child(6){
-  position: absolute;
-  right: -373.5px;
-  bottom: 52px;
-  width: 230px;
-  box-sizing: border-box;
-  padding: 0.22rem;
-  padding-bottom: 0.25rem;
+.gridItem3{
+  grid-area: cell3;
 }
-
 
 #back-text p:first-child{
   text-indent: 0;
 }
-
-#back-text p:last-child{
-  margin-block-start: 2rem;
-  text-indent: 0;
+.verticalFiller{
+  height: 22.5px;
 }
 
-@media screen and (max-width: 800px) {
+p.signature{
+  text-indent: 0;
+  text-align: end;
+  padding-inline-end: 0.55rem;
+}
+
+@media screen and (min-width: 600px) and (max-width: 800px) {
   #front img,
   #back img{
-    max-width: 100vw;
+    max-width: 600px;
+  }
+  #back-text{
+    padding: 1.7rem 1.2rem;
+    grid-row-gap: 0.6rem;
+  }
+  p{
+    font-size: .80rem;
+    text-indent: 1.0rem;
+    line-height: 1.15rem;
+  }
+  p.signature{
+    padding-inline-end: 0.18rem;
+  }
+}
+
+@media screen and (max-width: 599px) {
+  #front img,
+  #back img{
+    max-width: 360px;
+  }
+  #back-text{
+    padding: 0.9rem 0.6rem;
+    grid-column-gap: 1.2rem;
+    grid-row-gap: 0.3rem;
+  }
+  p{
+    font-size: .5rem;
+    line-height: 0.711rem;
+    text-indent: 1.0rem;
+  }
+  .verticalFiller{
+    height: 0.6rem;
+  }
+  p.signature{
+    padding-inline-end: 0.17rem;
+  }
+  br{
+    display: none;
+  }
+}
+
+/* androids in landscape needed some tweaking to look good */
+/* @supports (-webkit-touch-callout: none) and (max-width: 599px){ this doesnt work together */
+@media screen and (max-width: 800px) and (orientation: landscape){
+  body:not(.ios-device) p{
+    font-size: .85rem;
+    line-height: 1.05rem;
   }
 }
