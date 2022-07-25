@@ -26,6 +26,7 @@ body{
   /* diff browsers have their own default stylesheet 
   which sets the base text size => set it to same */
   font-size: 16px;
+  box-sizing: border-box;
 }
 
 i, em{

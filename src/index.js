@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', ev=>{
     document.body.classList.add(IOS_CLASSNAME)
   }
 
+  // get newsletter/postcard edition number from hash (which will be used as part of the URL)
   if (location.hash){
-    // get edition number from hash which will be used as part of the link
     const srcUrlFront = getImageURL('front')
     const imageEl = document.querySelector('main #front img')
     imageEl.setAttribute('src', srcUrlFront)
@@ -35,19 +35,24 @@ document.addEventListener('DOMContentLoaded', ev=>{
   }
 
   const card = document.querySelector('.card')
-
   card.addEventListener('mouseenter', handleFlip)
   card.addEventListener('mouseleave', handleFlip)
-  // for the mobile devices
+  // for mobile devices
   card.addEventListener('click', handleFlip)
 })
 
 function handleFlip(ev) {
 
+  const isDeviceMobile = isMobileDevice()
+  const isEventOfHoverType = ev.type === 'mouseenter' || ev.type === 'mouseleave'
+  // on iPhones after page load first click would trigger flip twice => weird, prevent this
+  if (isDeviceMobile && isEventOfHoverType) return;
+
   // if it's click on link, dont flip card
   if (isAnchorEl(ev.target)) return;
 
-  // prevent enter and leave events happening when mouse movement is too slow and around card edges
+  // prevent enter and leave events happening when mouse movement is too slow 
+  // and around card edges => this lead to double-flip
   if (isFlipInProgress) return;
   isFlipInProgress = true
   flipTimer = setTimeout(()=>{
@@ -76,6 +81,13 @@ function getImageURL(side = 'back'){
     else return `${isHostedLocally ? '' : GITHUB_ROOT}${FRONT_FOLDER_PREFIX}${DEFAULT_BACK}`
 }
 
+function isMobileDevice(){
+  // detect if mouse is available:
+  // https://stackoverflow.com/questions/6666907/how-to-detect-a-mobile-device-with-javascript
+  // tests whether the user has any pointing device (such as a mouse), and if so, how accurate it is.
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/@media/any-pointer
+  return window.matchMedia("(any-pointer:coarse)").matches // phones have 'coarse', mouses are 'fine'
+}
 function isIosDevice(){
   return [
     'iPad Simulator',
