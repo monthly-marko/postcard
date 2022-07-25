@@ -197,3 +197,10 @@ p.signature{
     line-height: 1.05rem;
   }
 }
+
+/* mobile iOS */
+@media screen and (max-width: 800px){
+  body.ios-device .verticalFiller{
+    height: 8px;
+  }
+}
