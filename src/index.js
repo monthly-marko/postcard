@@ -9,10 +9,14 @@ const EDITION_FRONT_PREFIX = 'edition',
   DEFAULT_BACK = 'postcard-back-default.jpeg',
   flip_duration = parseFloat(
     window.getComputedStyle(document.documentElement).getPropertyValue('--flip-duration')
-  ) * 1000, // get it as milliseconds
+  ) * 1000, // get it as milliseconds,
+  hoverFlipDelay = 1300,
   IOS_CLASSNAME = 'ios-device'
 
-let flipTimer, isFlipInProgress = false;
+let flipTimer, 
+isFlipInProgress = false,
+allowFlipOnHover = false;
+
 
 document.addEventListener('DOMContentLoaded', ev=>{
 
@@ -34,6 +38,14 @@ document.addEventListener('DOMContentLoaded', ev=>{
     // go to the latest one - how?
   }
 
+  // when ppl open page from email link 
+  // the mouse cursor is often above card so the card flips
+  // which doesn't make ideal first impression 
+  // => prevent flip on hover for first moment
+  window.setTimeout(()=>{
+    allowFlipOnHover = true
+  },hoverFlipDelay)
+
   const card = document.querySelector('.card')
   card.addEventListener('mouseenter', handleFlip)
   card.addEventListener('mouseleave', handleFlip)
@@ -47,6 +59,7 @@ function handleFlip(ev) {
   const isEventOfHoverType = ev.type === 'mouseenter' || ev.type === 'mouseleave'
   // on iPhones after page load first click would trigger flip twice => weird, prevent this
   if (isDeviceMobile && isEventOfHoverType) return;
+  if (!allowFlipOnHover) return;
 
   // if it's click on link, dont flip card
   if (isAnchorEl(ev.target)) return;
